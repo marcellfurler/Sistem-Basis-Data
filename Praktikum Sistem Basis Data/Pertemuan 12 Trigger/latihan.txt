@@ -1,0 +1,33 @@
+No1 : import 
+No2 :
+CREATE TRIGGER after_insert_buku after INSERT on buku
+for each row begin 
+insert into log_pindah_buku 
+set 
+kode_buku=new.kode_buku, 
+posisi_lama = new.posisi_buku,
+posisi_baru=new.posisi_buku,
+waktu_pindah = now();
+end;
+
+latihan : insert into buku values( "A0001", "Yesus masuk Islam", "Irenne", "A25B" );
+
+No3 : 
+create TRIGGER after_buku_update after update on buku for each row BEGIN
+insert into log_pindah_buku
+SET kode_buku=old.kode_buku,
+posisi_lama=old.posisi_buku,
+posisi_baru=new.posisi_buku,
+waktu_pindah=now();
+end;
+
+No4 : 
+insert into buku values( "RE112", "The Fault in Our Stars", "John Green", "R-02" );
+
+No5 : 
+update buku SET posisi_buku = "R-33" where kode_buku = "RE112";
+
+No6 :
+create trigger before_buku_insert before insert on buku for each row BEGIN if CONVERT(substr(new.posisi_buku, 3, 2), signed) <= 0 then set new.posisi_buku = concat(left(new.posisi_buku, 2), "01"); ELSEIF convert(substr(new.posisi_buku, 3, 2),signed)>50 then set new.posisi_buku = concat(substr(new.posisi_buku, 1, 2), "50"); end if; end;
+
+No7 : 

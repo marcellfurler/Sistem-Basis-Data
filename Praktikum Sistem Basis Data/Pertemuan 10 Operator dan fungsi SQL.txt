@@ -1,0 +1,89 @@
+Latihan 1
+a. Tampilkan mahasiswa perempuan yang berasal dari Yogyakarta.
+b. Tampilkan mahasiswa yang memiliki IPK antara 3.00 hingga 3.50.
+c. Tampilkan mahasiswa yang sudah menyelesaikan SKS lebih dari atau sama
+dengan 70.
+d. Tampilkan mahasiswa yang memiliki nama depannya diawali “Mi..” atau nama
+belakangnya berakhiran “..ya”.
+e. Tampilkan NIM, nama depan dan jumlah SKS yang harus ditempuh untuk lulus
+(mencapai 144 SKS), diurutkan dari yang paling mendekati kelulusan.
+
+a. SELECT * from mahasiswa where sex="F" and alamat like '%Yogyakarta';
+b. select * from mahasiswa where ipk BETWEEN 3.01 and 3.49; (3.01 and 3.49 supaya 3 dan 3.50 tidak masuk)
+c. select * from mahasiswa where sks>=70;
+d. select * from mahasiswa where nama_depan like 'Mi%' or nama_belakang like '%ya';
+e. select nim, nama_depan, 144-mahasiswa.sks as 'sks' from mahasiswa order by mahasiswa.sks desc;
+
+
+
+Latihan:
+a. Tampikan NIM dan gabungan nama depan dan nama belakang sebagai nama
+lengkap dari mahasiswa diurutkan NIM.
+b. Tambahkan data email di column email dengan ketentuan “nama depan” + “.” +
+“nama belakang”+”@gmail.ac.id” , contoh : andika.rangga@gmail.ac.id. Semua
+lowercase.
+c. Ubahlah data email dengan mengganti kata “gmail” menjadi “ukdw” , contoh :
+andika.rangga@ukdw.ac.id.
+d. Tampilkan mahasiswa yang merupakan mahasiswa prodi SI (72...), dengan
+menggunakan column NIM tanpa menggunakan wildcard % maupun _.
+e. Tampilkan mahasiswa yang merupakan mahasiswa angkatan 2017 dengan
+menggunakan column NIM tanpa menggunakan wildcard % maupun _.
+f. Tampilkan NIM dan hanya nama kabupaten/kota saja dari kolom alamat.
+
+a. select nim, concat(nama_depan, " ", nama_belakang) as "Nama Lengkap" from mahasiswa order by nim;
+b. select concat(lower(nama_depan), ".", lower(nama_belakang), "@gmail.com") from mahasiswa;
+c. UPDATE mahasiswa set email=concat(lower(nama_depan), ".", lower(nama_belakang), "@gmail.com"); setelah itu : UPDATE mahasiswa set email= REPLACE(email, "gmail.com", "ukdw.ac.id");
+d. SELECT * from mahasiswa where left(nim, 2)=("72");
+e. SELECT * from mahasiswa where substr(nim, 3, 2)="20"; 
+f. select nim, substring_index(alamat, " ", -1) as "Kabupaten/Kota" from mahasiswa;
+
+
+Latihan:
+a. Hitung luas lingkaran dengan jari-jari 5 cm. Hasil harus menuliskan satuan cm dan
+dibulatkan dua angka di belakang koma.
+b. Hitung nilai sinus dan kosinus dari sudut 120 ̊.
+
+a. select concat(round(pi()*5*5, 2), "CM") as "Luas Lingkaran";
+b. 
+
+
+Latihan:
+a. Tampilkan mahasiswa yang lahir sebelum tahun 2000.
+b. Tampilkan NIM, nama lengkap, tanggal lahir dengan format Sun, 6 October 1999.
+c. Tampilkan mahasiswa yang lahir di bulan ini (gunakan NOW() atau yang
+ekuivalen).
+d. Tampilkan data mahasiswa yang lahir di hari Senin.
+e. Tampilkan NIM, nama_depan, nama_belakang, serta usia setiap mahasiswa.
+
+a. select * from mahasiswa where year(tgl_lahir)<2000;
+b. SELECT nim, concat(nama_depan, " ", nama_belakang) as "Nama Lengkap", date_format(tgl_lahir, "%W, Tahun %Y, Bulan %M, Tanggal %d") as "Tanggal Lahir" from mahasiswa;
+c. select * from mahasiswa where month(tgl_lahir)=month(now());
+d. select * from mahasiswa where date_format(tgl_lahir, "%W")="Monday";
+e. select nim, nama_depan, nama_belakang, year(now())-year(tgl_lahir) from mahasiswa;
+
+
+Latihan:
+a. Ambil nilai terbesar dari NIM dari prodi Informatika, lalu lakukan increment nilai
+tersebut sebanyak 1 untuk menciptakan NIM mahasiswa yang baru saja
+mendaftar.
+
+a. select convert((max(nim)), unsigned integer)+1 from mahasiswa;
+
+
+
+
+Latihan:
+a. Tampilkan NIM , nama lengkap, dan prodi. Jika dia memiliki NIM berawalkan “71”
+maka prodinya “Informatika” , jika NIM berawalkan “72” maka prodinya “Sistem
+Informasi”.
+b. Periksalah apakah nama depan dari mahasiswa dengan NIM 72180351 dengan
+71180390 sama, jika benar munculkan pesan “Nama depan sama”, jika beda
+“Nama depan beda”.
+c. Tampilkan data NIM, nama depan, nama belakang, dan nomor telephone, tapi jika
+nomor telepon NULL gantilah dengan kata-kata “No Telephone Tidak Tersedia”
+
+a. SELECT nim, concat(nama_depan, " ", nama_belakang), if(LEFT(nim, 2)="71", "Informatika", "Sistem Informasi") from mahasiswa;
+b. SELECT if( (SELECT nama_depan from mahasiswa where nim="72210351")= (SELECT nama_depan from mahasiswa where nim="71210390"), "Nama depan sama", "Nama depan beda");
+c. select nim, nama_depan, nama_belakang, ifnull(no_telp, "No telepon tidak tersedia") from mahasiswa;
+
+

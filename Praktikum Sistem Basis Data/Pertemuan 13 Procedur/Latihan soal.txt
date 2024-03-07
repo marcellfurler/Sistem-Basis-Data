@@ -1,0 +1,8 @@
+1A
+create PROCEDURE getOfficeCountry(IN countryName varchar(255)) BEGIN SELECT * from offices where country = countryName; end;
+
+1b
+
+1C
+
+

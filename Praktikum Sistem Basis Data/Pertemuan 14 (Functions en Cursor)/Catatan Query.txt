@@ -1,0 +1,94 @@
+DELIMITER $$
+CREATE FUNCTION countCustCountry (countryIn VARCHAR(15)) RETURNS INT
+BEGIN
+ DECLARE result INT;
+ SELECT COUNT(*) INTO result FROM customers WHERE country = countryIn;
+ RETURN result;
+END$$
+DELIMITER;
+(atau bisa juga dibuka di Routines di database)
+
+ug1
+DELIMITER //
+create FUNCTION namaLengkap (custNum int) returns varchar(30)
+BEGIN	
+	declare nama varchar(30);
+    select concat(employees.firstName, " ", employees.lastName)
+    into nama
+    from employees
+    INNER JOIN customers on employees.employeeNumber = customers.salesRepEmployeeNumber where customers.customerNumber = custNum;
+    return nama;
+    end //
+    delimiter;
+
+ug2
+BEGIN	
+	declare nama varchar(30);
+    select concat(employees.firstName, " ", employees.lastName)
+    into nama
+    from employees
+    INNER JOIN customers on employees.employeeNumber = customers.salesRepEmployeeNumber where customers.customerNumber = custNum;
+    return nama;
+    end
+
+SELECT * FROM `customers` WHERE creditLimit > avgCredLimit() order by customers.creditLimit asc;
+
+ug3
+DELIMITER $$
+CREATE PROCEDURE getEmpList (INOUT empList VARCHAR(4000), in pOfficeCode varchar(10))
+BEGIN
+	DECLARE vFinished INTEGER DEFAULT 0;
+	DECLARE vName varchar(100) DEFAULT "";
+    
+    -- declare cursor for employee email
+    DECLARE empCursor CURSOR FOR
+    SELECT lastName FROM employees where officeCode=pOfficeCode;
+    
+	-- declare NOT FOUND handler
+    DECLARE CONTINUE HANDLER
+    FOR NOT FOUND SET vFinished = 1;
+    
+    OPEN empCursor;
+	getEmpName : LOOP
+    
+ 	FETCH empCursor INTO vName;
+ 	IF vFinished = 1 THEN
+ 	LEAVE getEmpName;
+    
+ 	END IF;
+ -- build email list
+	SET empList = CONCAT(vName,"; ",empList);
+END LOOP getEmpName;
+CLOSE empCursor;
+END $$
+DELIMITER ;
+
+select officeCode, city, @empList1 from offices where officeCode=1 union select officeCode, city, @empList2 from offices where officeCode=2 UNION select officeCode, city, @empList3 from offices where officeCode=3 UNION select officeCode, city, @empList4 from offices where officeCode=4 union SELECT "dst...", "", "";
+
+ug4
+
+Begin
+Declare muncul int;
+Select count(*) as muncul into muncul from detailNota where idNota = id;
+Return muncul;
+End
+
+Begin
+Declare hasil varchar(100);
+Declare stok_barang int;
+Select stok into stok_barang from barang where idBarang = id;
+If stok barang >= jumlah then set hasil = "ada";
+Else set hasil = "tidak ada";
+End if;
+Return hasil;
+End
+
+Begin
+Declare hasil varchar(255);
+Declare status varcha(100);
+Select member_status into status from customer where idCustomer = id;
+If status = "-" then set hasil = "Tidak member";
+Else set hasil = "member";
+End if;
+Return hasil;
+End

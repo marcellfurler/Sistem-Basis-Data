@@ -1,0 +1,32 @@
+Latihan A
+1. Impor file prak_sbd_11_himp.sql di sini. Kemudian tampilkan seluruh mahasiswa baik yang
+PJJ maupun yang reguler. Data kembar cukup ditampilkan satu kali saja.
+2. Tampilkan nama mahasiswa baik yang PJJ maupun yang reguler. Urutkan berdasarkan
+nama namun tidak menggunakan klausa ORDER BY.
+3. Tampilkan mahasiswa hanya mahasiswa yang merangkap PJJ dan reguler. Mahasiswa yang
+PJJ saja atau reguler saja tidak ditampilkan.
+4. Tampilkan mahasiswa PJJ yang tidak merangkap reguler.
+5. Tampilkan mahasiswa reguler yang tidak merangkap PJJ.
+
+**Jawaban**
+1. select * from mahasiswa union select * from mahasiswapjj;
+2. select nama from mahasiswa union all SELECT nama from mahasiswapjj;
+3. 
+4. 
+5. select * from mahasiswa where EXISTS (SELECT * from mahasiswapjj where mahasiswa.nim = mahasiswapjj.nim);
+
+
+Latihan B
+1. Tampilkan data karyawan yang memiliki departemen yang sama dengan Emil.
+2. Tampilkan nama depan karyawan yang memiliki gaji lebih besar daripada Rino Cheros.
+3. Tampilkan data karyawan yang memiliki gaji di bawah gaji rata-rata karyawan.
+4. Tampilkan data karyawan yang bekerja pada departemen Finance atau pada Region 2.
+5. Tampilkan nama departemen yang karyawannya memiliki gaji di atas 3,5 juta.
+6. Tampilkan karyawan yang tidak bekerja di departemen Region 1.
+7. Tampilkan karyawan yang gajinya lebih rendah daripada semua karyawan yang bekerja
+di departemen Finance.
+**JAWABAN**
+1. SELECT * FROM karyawan inner join departemen on karyawan.id_departemen = departemen.id_departemen where karyawan.id_departemen=(SELECT id_departemen from karyawan where nama_depan ="Emil");
+2. SELECT nama_depan from karyawan where gaji > (SELECT gaji from karyawan where nama_depan= 'Rino' and nama_belakang = "Cheros" )group by nama_depan asc;
+3. SELECT * from karyawan where gaji < (SELECT AVG(gaji) from karyawan );
+4. 

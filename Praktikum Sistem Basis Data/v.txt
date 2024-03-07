@@ -1,0 +1,12 @@
+data atau properti adalah kumpulan inputan yang akan nanati digunakan di dalam fungctions
+
+functions adalah bentuk2 untuk mengubah, mengedit, mengecheck data atau properti
+
+objek adalah jumlah benda, orang atau apapun yang dapat dihitung
+    class adalah jenis dari objek
+contoh class : rekening
+    contoh objek : jumlah rekening-rekening yang didaftarakan orang
+contoh lain : class : matkul strukdat
+    objek : 30 mahasiswa dan 1 dosen 
+
+asbtaraksi adalah proses 

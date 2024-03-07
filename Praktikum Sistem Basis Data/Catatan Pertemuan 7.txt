@@ -1,0 +1,17 @@
+*count untuk menghitung jumlah kolom
+
+*cara menampilkan rata-rata berdasarkan suatu pengelompokan :
+	select nama_prodi, avg(gaji_tahunan) from dosen GROUP by nama_prodi;
+*menampilkan jumlah untuk menampilkan pengelompokan :
+	select nama_prodi, sum(gaji_tahunan) from dosen GROUP by nama_prodi;
+*perintah untuk menghitung suatu kondisi : 
+	SELECT COUNT(*) from dosen where gaji_tahunan=66000000;
+
+No 1 : SELECT * FROM dokter where tarif_dokter=(SELECT MAX(tarif_dokter)from dokter);
+No 2 : SELECT * FROM dokter where tarif_dokter=(SELECT MIN(tarif_dokter)from dokter);
+No 3 : SELECT satuan_obat, COUNT(*) AS Jumlah from obat GROUP BY satuan_obat;
+No 4 : SELECT satuan_obat, AVG(harga_obat) as "Rata-rata Harga Obat" from obat GROUP by satuan_obat; (salah)
+No 5 : select count(DISTINCT(satuan_obat)) as "Jumlah Jenis Obat" from obat;
+no 6 : select id_berobat, COUNT(id_obat) as  "jumlah obat" from resep_obat group by id_berobat;
+No 7 : SELECT id_berobat, GROUP_CONCAT(nama_obat) from berobat NATURAL join resep_obat NATURAL JOIN obat group by id_berobat;
+No 8 : 

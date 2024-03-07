@@ -1,0 +1,119 @@
+*cross join digunakan untuk mengalikan kolom antar 2 tabel berbeda
+	x	a
+	y	b
+		c
+hasil : x	a
+	x	b
+	x	c
+	y	a
+	y	b
+	y	c
+
+* inner join itu menggabungkan baris berdasarkan pasangannya antara colom di antara dua tabel
+* contoh 
+tabel 1 : huruf = a,b,c,d
+tabel 2 : huruf2 = x,y,a,z,k,d
+select huruf1 inner join 
+
+untuk select 'inner join' : select from nama_table.nama_kolom inner join nama_table2 on nama_table.primary_key = nama_table2.primary_key
+
+
+inner join : select nama_kolom1, nama_kolom2 from nama tabel1, tabel2 where tabel1.primarykey = tabel2.primarykey
+	*primary keynya sama dengan yang berhubungan FK dengan PK nya..
+
+
+* right join itu menampilkan baris yang berada di sebelah kiri dari tabel 1, semuanya, namun di kanannya akan berisi null jika tidak terdapat data yang berhubungan, dan akan terisi jika tabel 1 nya memiliki pasangan pada tabel 2
+contoh : 
++----+----------+
+| id | nama     |
++----+----------+
+| 1  | John     |
+| 2  | Sarah    |
+| 3  | Michael  |
+| 4  | Emily    |
++----+----------+
+
++----+----------+----------+
+| id | pelanggan_id | produk  |
++----+----------+----------+
+| 1  | 1           | A      |
+| 2  | 2           | B      |
+| 3  | 1           | C      |
++----+----------+----------+
+
+SELECT pelanggan.nama, pesanan.produk
+FROM pelanggan
+RIGHT JOIN pesanan ON pelanggan.id = pesanan.pelanggan_id;
+
++----------+----------+
+| nama     | produk   |
++----------+----------+
+| John     | A        |
+| Sarah    | B        |
+| John     | C        |
+| Michael  | NULL     |
++----------+----------+
+
+
+
+
+*left join, sebaliknya. * left join itu menampilkan baris yang berada di sebelah kanan dari tabel 1, semuanya, namun di kirinya akan berisi null jika tidak terdapat data yang berhubungan, dan akan terisi jika tabel 1 nya memiliki pasangan pada tabel 2
+
+* contoh
++----+----------+
+| id | nama     |
++----+----------+
+| 1  | John     |
+| 3  | Michael  |
+| 4  | Emily    |
++----+----------+
+
+
++----+----------+----------+
+| id | pelanggan_id | produk  |
++----+----------+----------+
+| 1  | 1           | A      |
+| 2  | 2           | B      |
+| 3  | 1           | C      |
++----+----------+----------+
+
+SELECT pelanggan.nama, pesanan.produk
+FROM pelanggan
+RIGHT JOIN pesanan ON pelanggan.id = pesanan.pelanggan_id;
+
++----------+----------+
+| nama     | produk   |
++----------+----------+
+| John     | A        |
+| NULL     | B        |
+| John     | C        |
++----------+----------+
+
+
+
+
+
+nomor 3:
+SELECT * FROM obat INNER join resep_obat on obat.id_obat = resep_obat.id_obat;
+
+
+nomor 4 : 
+SELECT * FROM obat left OUTER join resep_obat on obat.id_obat = resep_obat.id_obat where resep_obat.id_obat is null;
+
+nomor 5 : 
+SELECT * from obat where satuan_obat = 'ml';
+
+nomor 6 :
+SELECT * from berobat INNER JOIN resep_obat on resep_obat.id_berobat = berobat.id_berobat;
+
+nomor 7 : 
+SELECT * from berobat left OUTER JOIN resep_obat on resep_obat.id_berobat = berobat.id_berobat;
+
+nomor 8 : 
+SELECT * from berobat NATURAL LEFT JOIN resep_obat WHERE resep_obat.id_berobat is null;
+
+nomor 9 :
+SELECT b.id_berobat, d.nama_dokter, p.nama_pasien from berobat b, dokter d, pasien p WHERE d.id_dokter=b.id_dokter and p.id_pasien=b.id_pasien;
+
+nomor 10 : 
+SELECT nama_dokter from dokter left join berobat on dokter.id_dokter = berobat.id_dokter WHERE berobat.id_dokter is null;
